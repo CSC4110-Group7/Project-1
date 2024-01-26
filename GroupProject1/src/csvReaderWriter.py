@@ -1,7 +1,7 @@
 def readCsv(path):
     return True
 
-def saveCsv(path, data):
+def saveCsv(path, columnNames, data):
     return True
 
 #
