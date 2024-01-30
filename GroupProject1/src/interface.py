@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from licenseFrame import getLicenseFrame
 from manageFrame import getManageFrame
-from editFrame import getEditFrame
+from queryFrame import getQueryFrame
 from infoFrame import getInfoFrame
 
 window = Tk();
@@ -32,7 +32,7 @@ def setCurrentTab(name):
     currentTab = name
 
 addTab('manage', getManageFrame(main_frame=main_frame))
-addTab('edit', getEditFrame(main_frame=main_frame))
+addTab('query', getQueryFrame(main_frame=main_frame))
 addTab('info', getInfoFrame(main_frame=main_frame))
 
 
