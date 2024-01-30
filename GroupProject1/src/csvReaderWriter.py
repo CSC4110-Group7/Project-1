@@ -29,7 +29,7 @@ def saveCsv(file):
     namesOut = ""
     for name in columnNames:
         namesOut += name + ','
-    namesOut = namesOut.removesuffix(',')
+    namesOut = namesOut.removesuffix(',') + '\n'
 
     file.write(namesOut)
 
@@ -37,7 +37,7 @@ def saveCsv(file):
         rowOut = ""
         for value in row:
             rowOut += value + ','
-        rowOut = rowOut.removesuffix(',')
+        rowOut = rowOut.removesuffix(',') + '\n'
         file.write(rowOut)
 
     file.close()
