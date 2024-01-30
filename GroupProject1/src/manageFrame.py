@@ -8,9 +8,11 @@ from csvReaderWriter import saveCsv
 def getManageFrame(main_frame):
     frame = ttk.Frame(master=main_frame)
     ttk.Label(master=frame, text='Manage', padding=20).pack();
-    
-    ttk.Button(master=frame, text='Load Data', command=openFileButton).pack()
-    ttk.Button(master=frame, text="Save Data", command=saveFileButton).pack()
+
+    saveload_frame = ttk.Frame(master=frame, padding=10)
+    ttk.Button(master=saveload_frame, text='Load Data', command=openFileButton, padding=10).pack(side=LEFT)
+    ttk.Button(master=saveload_frame, text="Save Data", command=saveFileButton, padding=10).pack(side=RIGHT)
+    saveload_frame.pack(side=BOTTOM)
 
     return frame
 

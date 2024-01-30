@@ -2,20 +2,28 @@
 
 #Global csv data
 columnNames = []
+types = []
 data = [[]]
-
 
 
 def readCsv(file):
     global columnNames
     global data
+    global types
 
     columnNames.clear()
     data.clear()
+    types.clear()
 
     names = file.readline()
-    for name in names.split(','):
-        columnNames.append(name.strip())
+    for name in names.strip().split(','):
+        nsplit = name.split('.')
+        columnNames.append(nsplit[0])
+
+        if(len(nsplit) > 1):
+            types.append(nsplit[1])
+        else:
+            types.append('string')
 
     for line in file:
         data.append(line.strip().split(','))
@@ -25,10 +33,11 @@ def readCsv(file):
 def saveCsv(file):
     global columnNames
     global data
+    global types
 
     namesOut = ""
-    for name in columnNames:
-        namesOut += name + ','
+    for i in range(len(columnNames)):
+        namesOut += columnNames[i] + '.' + types[i] + ','
     namesOut = namesOut.removesuffix(',') + '\n'
 
     file.write(namesOut)

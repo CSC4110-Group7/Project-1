@@ -3,6 +3,7 @@ from tkinter import ttk
 from licenseFrame import getLicenseFrame
 from manageFrame import getManageFrame
 from editFrame import getEditFrame
+from infoFrame import getInfoFrame
 
 window = Tk();
 window.title("ForestDB");
@@ -32,6 +33,7 @@ def setCurrentTab(name):
 
 addTab('manage', getManageFrame(main_frame=main_frame))
 addTab('edit', getEditFrame(main_frame=main_frame))
+addTab('info', getInfoFrame(main_frame=main_frame))
 
 
 def licenseAgreementButton():
