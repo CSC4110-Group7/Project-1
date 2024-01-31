@@ -6,7 +6,6 @@ from csvReaderWriter import readCsv, deleteData, validateData
 from csvReaderWriter import saveCsv
 from csvReaderWriter import columnNames, data
 
-
 from queryFrame import setViewOutput
 
 def getManageFrame(main_frame):

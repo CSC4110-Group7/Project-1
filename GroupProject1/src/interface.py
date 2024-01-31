@@ -35,6 +35,9 @@ addTab('manage', getManageFrame(main_frame=main_frame))
 addTab('query', getQueryFrame(main_frame=main_frame))
 addTab('info', getInfoFrame(main_frame=main_frame))
 
+def reloadQueryTab():
+    tabs['query'] = getQueryFrame(main_frame=main_frame)
+
 
 def licenseAgreementButton():
     main_frame.pack()

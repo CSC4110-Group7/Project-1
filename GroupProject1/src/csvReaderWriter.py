@@ -67,6 +67,26 @@ def validateData(row):
         # Add more validations as needed
     return True
 
+def validate(value, type):
+    if type == 'email':
+        return email_pattern.match(value)
+    elif type == 'ssn':
+        return ssn_pattern.match(value)
+    elif type == 'phone':
+        return phone_pattern.match(value)
+    elif type == 'alpha':
+        return str(value).isalpha()
+    elif type == 'alphanum':
+        return str(value).isalnum()
+    elif type == 'int':
+        return str(value).isdigit()
+    elif type == 'float':
+        return str(value).isnumeric()
+    elif type == 'string':
+        return len(value) > 0
+    # Add more validations as needed
+    return True
+
 def deleteData(uniqueId):
     global data
     data = [row for row in data if row[0] != uniqueId]
