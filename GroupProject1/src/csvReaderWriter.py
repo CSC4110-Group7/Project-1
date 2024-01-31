@@ -38,10 +38,7 @@ def saveCsv(file):
     file.write(namesOut)
 
     for row in data:
-        rowOut = ""
-        for value in row:
-            rowOut += value + ','
-        rowOut = rowOut.removesuffix(',') + '\n'
+        rowOut = ','.join([value for value in row]) + '\n'
         file.write(rowOut)
 
     file.close()
@@ -72,7 +69,6 @@ def validateData(row):
 
 def deleteData(uniqueId):
     global data
-
     data = [row for row in data if row[0] != uniqueId]
 
 

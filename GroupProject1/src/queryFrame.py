@@ -1,6 +1,7 @@
 from tkinter import ttk
 from tkinter import *
 
+
 global output_listbox
 
 def getQueryFrame(main_frame):
@@ -11,7 +12,7 @@ def getQueryFrame(main_frame):
 
     output_frame = ttk.Frame(master=frame, padding=10)
     output_scrollbar = ttk.Scrollbar(master=output_frame, orient='vertical')
-    output_listbox = Listbox(master=output_frame, width=100)
+    output_listbox = Listbox(master=output_frame, width=100, font="TkFixedFont")
 
     #Link scrollbar & output box together
     output_listbox.config(yscrollcommand = output_scrollbar.set);
@@ -24,13 +25,12 @@ def getQueryFrame(main_frame):
     return frame
 
 def setViewOutput(colNames, rows):
-    names = ''
-    for name in colNames:
-        names += name + (' ' * (20 - len(name)))
-    output_listbox.insert(END, names)
+    output_listbox.delete(0, END)
+
+    row_format = '    '.join(['{:<' + str(len(name)) + '}' for name in colNames])
+    print(row_format)
+
+    output_listbox.insert(END, row_format.format(*colNames))
 
     for row in rows:
-        row_out = ''
-        for value in row:
-            row_out += value + (' ' * (20 - len(value)))
-        output_listbox.insert(END, row_out)
+        output_listbox.insert(END, row_format.format(*row))
