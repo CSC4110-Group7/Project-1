@@ -4,6 +4,10 @@ from tkinter import filedialog
 
 from csvReaderWriter import readCsv
 from csvReaderWriter import saveCsv
+from csvReaderWriter import columnNames, data
+
+
+from queryFrame import setViewOutput
 
 def getManageFrame(main_frame):
     frame = ttk.Frame(master=main_frame)
@@ -19,6 +23,7 @@ def getManageFrame(main_frame):
 def openFileButton():
     file = filedialog.askopenfile()
     readCsv(file)
+    setViewOutput(colNames=columnNames, rows=data)
 
 def saveFileButton():
     file = filedialog.asksaveasfile()
