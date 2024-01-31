@@ -51,12 +51,22 @@ def validateData(row):
         if i >= len(types):  # Prevent index out of range if row has more values than expected
             return False
         type = types[i]
-        if type == 'email' and not email_pattern.match(value):
-            return False
-        elif type == 'ssn' and not ssn_pattern.match(value):
-            return False
-        elif type == 'phone' and not phone_pattern.match(value):
-            return False
+        if type == 'email':
+            return email_pattern.match(value)
+        elif type == 'ssn':
+            return ssn_pattern.match(value)
+        elif type == 'phone':
+            return phone_pattern.match(value)
+        elif type == 'alpha':
+            return str(value).isalpha()
+        elif type == 'alphanum':
+            return str(value).isalnum()
+        elif type == 'int':
+            return str(value).isdigit()
+        elif type == 'float':
+            return str(value).isnumeric()
+        elif type == 'string':
+            return len(value) > 0
         # Add more validations as needed
     return True
 
