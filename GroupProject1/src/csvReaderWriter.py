@@ -1,15 +1,16 @@
-
+import re
 
 #Global csv data
 columnNames = []
 types = []
 data = [[]]
 
+email_pattern = re.compile(r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', re.IGNORECASE)
+ssn_pattern = re.compile(r'^\d{3}-\d{2}-\d{4}$')
+phone_pattern = re.compile(r'^\+?1?\d{9,15}$')
 
 def readCsv(file):
-    global columnNames
-    global data
-    global types
+    global columnNames, data, types
 
     columnNames.clear()
     data.clear()
@@ -31,15 +32,9 @@ def readCsv(file):
     file.close()
 
 def saveCsv(file):
-    global columnNames
-    global data
-    global types
+    global columnNames, data, types
 
-    namesOut = ""
-    for i in range(len(columnNames)):
-        namesOut += columnNames[i] + '.' + types[i] + ','
-    namesOut = namesOut.removesuffix(',') + '\n'
-
+    namesOut = ",".join([f"{col}.{typ}" for col, typ in zip(columnNames, types)]) + '\n'
     file.write(namesOut)
 
     for row in data:
@@ -50,6 +45,25 @@ def saveCsv(file):
         file.write(rowOut)
 
     file.close()
+
+def validateData(row):
+    for i, value in enumerate(row):
+        if i >= len(types):  # Prevent index out of range if row has more values than expected
+            return False
+        type = types[i]
+        if type == 'email' and not email_pattern.match(value):
+            return False
+        elif type == 'ssn' and not ssn_pattern.match(value):
+            return False
+        elif type == 'phone' and not phone_pattern.match(value):
+            return False
+        # Add more validations as needed
+    return True
+
+def deleteData(uniqueId):
+    global data
+
+    data = [row for row in data if row[0] != uniqueId]
 
 
 
