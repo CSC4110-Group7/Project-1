@@ -22,12 +22,12 @@ class LicenseConfirmFrame:
         self.title = ttk.Label(self.root, text='User License Agreement').pack()
 
         self.license_display = ScrollTextDisplay(self.root, text=self.license_content)
+        self.license_display.pack(padx=10, pady=10)
 
         self.button_frame = ttk.Frame(self.root)
         self.agree_button = ttk.Button(self.button_frame, text='I Agree', padding=5, command=self.agreementCallback).pack(side=tk.LEFT)
         self.disagree_button = ttk.Button(self.button_frame, text="I Don't Agree", padding=5, command=self.disagreementCallback).pack(side=tk.LEFT)
         self.button_frame.pack()
-        self.root.pack()
 
     def agreementCallback(self):
         self.root.pack_forget()
@@ -35,3 +35,6 @@ class LicenseConfirmFrame:
 
     def disagreementCallback(self):
         self.parent.destroy()
+
+    def pack(self, **kwargs):
+        self.root.pack(kwargs)

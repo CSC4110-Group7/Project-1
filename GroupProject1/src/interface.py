@@ -13,6 +13,7 @@ class MainInterface:
 
         self.tab_control = ttk.Notebook(self.root)
         self.license = LicenseConfirmFrame(self.root, self.packAfterAgree)
+        self.license.pack()
         # self.tab_control.pack(expand=1, fill="both")
 
     def addTab(self, frame, label):

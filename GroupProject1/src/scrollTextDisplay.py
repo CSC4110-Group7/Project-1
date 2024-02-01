@@ -7,7 +7,7 @@ class ScrollTextDisplay:
         self.text_content = kwargs.pop('text', "")
         self.parent = parent
 
-        self.root = ttk.Frame(self.parent, padding=10)
+        self.root = ttk.Frame(self.parent)
 
         self.scrollbar = tk.Scrollbar(self.root, orient="vertical")
         self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
@@ -18,7 +18,6 @@ class ScrollTextDisplay:
         
         self.textbox.config(yscrollcommand=self.scrollbar.set)
         self.scrollbar.config(command=self.textbox.yview)
-        self.root.pack()
 
         
     def insert(self, text, start=tk.END):
@@ -26,3 +25,6 @@ class ScrollTextDisplay:
 
     def clear(self, start=0, end=tk.END):
         self.delete(start, end)
+
+    def pack(self, **kwargs):
+        self.root.pack(kwargs)
