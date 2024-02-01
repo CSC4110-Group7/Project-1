@@ -1,4 +1,4 @@
-from tkinter import *
+import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog, messagebox
 
@@ -8,24 +8,31 @@ from csvReaderWriter import columnNames, data
 
 from queryFrame import setViewOutput
 
-def getManageFrame(main_frame):
-    frame = ttk.Frame(master=main_frame)
-    ttk.Label(master=frame, text='Manage', padding=20).pack();
+class ManageFrame:
+    def __init__(self, parent):
+        self.root = ttk.Frame(parent, padding=10)
 
-    saveload_frame = ttk.Frame(master=frame, padding=10)
-    ttk.Button(master=saveload_frame, text='Load Data', command=openFileButton, padding=10).pack(side=LEFT)
-    ttk.Button(master=saveload_frame, text="Save Data", command=saveFileButton, padding=10).pack(side=RIGHT)
-    saveload_frame.pack(side=TOP)
+        self.title = ttk.Label(self.root, text="Database Management Menu").pack()
 
-    # Frame for delete functionality
-    delete_frame = ttk.Frame(master=frame, padding=10)
-    ttk.Label(master=delete_frame, text="Unique ID:").pack(side=LEFT)
-    unique_id_entry = ttk.Entry(master=delete_frame)
-    unique_id_entry.pack(side=LEFT)
-    ttk.Button(master=delete_frame, text="Delete", command=lambda: deleteButton(unique_id_entry.get()), padding=10).pack(side=RIGHT)
-    delete_frame.pack(side=BOTTOM)
+        self.save_load_frame = ttk.Frame(self.root, padding=20)
+        ttk.Label(self.save_load_frame, text="File Operation", padding=10).pack()
+        self.load_button = ttk.Button(self.save_load_frame, text='Load Data', command=openFileButton, padding=10).pack(side=tk.LEFT)
+        self.save_button = ttk.Button(self.save_load_frame, text='Save Data', command=saveFileButton, padding=10).pack(side=tk.RIGHT)
+        self.save_load_frame.pack()
 
-    return frame
+        # Frame for delete functionality
+        # delete_frame = ttk.Frame(self.root, padding=10)
+        # ttk.Label(master=delete_frame, text="Unique ID:").pack(side=tk.LEFT)
+        # unique_id_entry = ttk.Entry(master=delete_frame)
+        # unique_id_entry.pack(side=tk.LEFT)
+        # ttk.Button(master=delete_frame, text="Delete", command=lambda: deleteButton(unique_id_entry.get()), padding=10).pack(side=tk.RIGHT)
+        # delete_frame.pack(side=tk.BOTTOM)
+
+
+    def pack(self, **kwargs):
+        self.root.pack(kwargs)
+
+
 
 def openFileButton():
     file = filedialog.askopenfile()

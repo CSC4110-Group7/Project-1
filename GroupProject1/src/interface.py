@@ -1,9 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 from licenseFrame import LicenseConfirmFrame
-from manageFrame import getManageFrame
+from manageFrame import ManageFrame
 from queryFrame import getQueryFrame
-from infoFrame import getInfoFrame
 from infoFrame import InfoFrame
 
 class MainInterface:
@@ -27,8 +26,7 @@ class MainInterface:
         self.root.mainloop()
 
 interface = MainInterface()
-infoTab = InfoFrame(interface.root)
-interface.addTab(infoTab.root, "info")
-interface.addTab(getManageFrame(interface.root), "manage")
+interface.addTab(InfoFrame(interface.root).root, "info")
+interface.addTab(ManageFrame(interface.root).root, "manage")
 interface.addTab(getQueryFrame(interface.root), "query")
 interface.mainloop()
