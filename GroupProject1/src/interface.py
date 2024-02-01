@@ -4,6 +4,7 @@ from licenseFrame import LicenseConfirmFrame
 from manageFrame import getManageFrame
 from queryFrame import getQueryFrame
 from infoFrame import getInfoFrame
+from infoFrame import InfoFrame
 
 class MainInterface:
     def __init__(self):
@@ -26,7 +27,8 @@ class MainInterface:
         self.root.mainloop()
 
 interface = MainInterface()
-interface.addTab(getInfoFrame(interface.root), "info")
+infoTab = InfoFrame(interface.root)
+interface.addTab(infoTab.root, "info")
 interface.addTab(getManageFrame(interface.root), "manage")
 interface.addTab(getQueryFrame(interface.root), "query")
 interface.mainloop()

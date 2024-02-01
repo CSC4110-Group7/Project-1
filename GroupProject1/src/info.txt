@@ -1,29 +1,15 @@
-	The ForestDB application currently has two main menus for
-querying and managing the database. These menus are called the query
-and manage menu respectively. Each employee has fields which store their
-data. For example, one employee field is their name, which stores that one
-particular employee’s name. If you want to query employees by name, you
-should first select the name option from the drop down menu, and then enter
-the name you wish to query for. Pressing the query button will execute the
-query based on the currently selected field and the value to query by.
-You can query employees by any field that they contain, such as ssn, email,
-phone, skills etc. The manage menu provides multiple database tools which
-manage the database. First off there is a save and backup button. The save
-button will save any added employees to the database. When entering data
-into the database, it is important to save the database before closing the
-program, otherwise that data will be lost. The backup button automatically
-generates a new backup of the database at the point in time in which the
-button was pressed. Backups are unlimited, and the next backup will be
-place in the data/backups folder with a name and a number, the higher the
-number, the later in time the backup. The main database file is saved into
-data/databases/forestdb, it is important to restrict privilege to this file,
-as it contains all the employee data of the database. The add button will add
-an employee to the database, assuming all of the fields of the employee are
-filled out correctly below the add button. If the fields are not filled out
-correctly, the label next to the add button will be updated with an error.
-In order to remove an employee from the database, simply type their unique id
-(found leftmost of the employee’s data in the database view box) and then press
-the ‘Remove Employee’ button. They will be deleted from the database. At this
-point in time, there is no way to edit an employee currently in the database.
-If you wish to edit an employee’s fields that is currently in the database,
-you should delete the employee and re-enter their data.
+Your Database
+The ForestDB application is provided to you as a solution to your database needs
+
+Application Organization
+The ForestDB application is organized into multiple different tabs.
+Each tab encapsulates a group of similar functionalities provided by the application.
+The main functionality of the application is contained within the query tab.
+
+The Manage Menu
+The manage menu is where you can find operations that affect the entire database, which aren't query-base.
+This is where you will load and save databases from csv files. This can be done using the load/save buttons.
+
+The Query Menu
+The query menu is where you can perform a variety of database operations.
+Here you will be able to insert, update, search, and delete records by any fields and operators you specify.

@@ -14,6 +14,7 @@ class ScrollTextDisplay:
 
         self.textbox = tk.Text(self.root, wrap=should_wrap_text)
         self.textbox.insert(tk.END, self.text_content)
+        self.textbox.config(state=tk.DISABLED)
         self.textbox.pack()
         
         self.textbox.config(yscrollcommand=self.scrollbar.set)
