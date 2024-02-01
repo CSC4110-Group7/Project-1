@@ -1,52 +1,31 @@
 from tkinter import *
 from tkinter import ttk
-from licenseFrame import getLicenseFrame
+from licenseFrame import LicenseConfirmFrame
 from manageFrame import getManageFrame
 from queryFrame import getQueryFrame
 from infoFrame import getInfoFrame
 
-window = Tk();
-window.title("ForestDB");
+class MainInterface:
+    def __init__(self):
+        self.root = Tk()
+        self.root.title("ForestDB")
+        self.root.geometry("800x500")
 
-main_frame = ttk.Frame(window)
+        self.tab_control = ttk.Notebook(self.root)
+        self.license = LicenseConfirmFrame(self.root, self.packAfterAgree)
+        # self.tab_control.pack(expand=1, fill="both")
 
-tabs = {}
-currentTab = 'license'
+    def addTab(self, frame, label):
+        self.tab_control.add(frame, text=label)
 
-tab_frame = ttk.Frame(main_frame)
+    def packAfterAgree(self):
+        self.tab_control.pack(expand=1, fill="both")
 
-def addTab(name, frame):
-    tabs[name] = frame
-    ttk.Button(master=tab_frame, text=name, command=lambda: setCurrentTab(name)).pack(side=LEFT)
+    def mainloop(self):
+        self.root.mainloop()
 
-def tabButtonHandler(evt):
-    setCurrentTab(evt.widget.text)
-
-def setCurrentTab(name):
-    global currentTab
-    if(currentTab == 'license'):
-        license_frame.pack_forget()
-    else:
-        tabs[currentTab].pack_forget()
-    tabs[name].pack()
-    currentTab = name
-
-addTab('manage', getManageFrame(main_frame=main_frame))
-addTab('query', getQueryFrame(main_frame=main_frame))
-addTab('info', getInfoFrame(main_frame=main_frame))
-
-def reloadQueryTab():
-    tabs['query'] = getQueryFrame(main_frame=main_frame)
-
-
-def licenseAgreementButton():
-    main_frame.pack()
-    tab_frame.pack(side=TOP)
-    setCurrentTab('manage')
-
-license_frame = getLicenseFrame(window, licenseAgreementButton)
-license_frame.pack()
-
-
-
-window.mainloop();
+interface = MainInterface()
+interface.addTab(getInfoFrame(interface.root), "info")
+interface.addTab(getManageFrame(interface.root), "manage")
+interface.addTab(getQueryFrame(interface.root), "query")
+interface.mainloop()
