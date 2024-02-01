@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import os
+from scrollTextDisplay import ScrollTextDisplay
 
 #Read license content from file
 def ReadLicenseFile():
@@ -19,18 +20,8 @@ class LicenseConfirmFrame:
 
         self.root = ttk.Frame(self.parent, padding=10)
         self.title = ttk.Label(self.root, text='User License Agreement').pack()
-        self.content_frame = ttk.Frame(self.root, padding=10)
 
-        self.scrollbar = tk.Scrollbar(self.content_frame)
-        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
-        self.content = tk.Text(self.content_frame, wrap=tk.WORD)
-        self.content.insert(tk.END, self.license_content)
-        self.content.pack()
-
-        self.content.config(yscrollcommand=self.scrollbar.set)
-        self.scrollbar.config(command=self.content.yview)
-        self.content_frame.pack()
+        self.license_display = ScrollTextDisplay(self.root, text=self.license_content)
 
         self.button_frame = ttk.Frame(self.root)
         self.agree_button = ttk.Button(self.button_frame, text='I Agree', padding=5, command=self.agreementCallback).pack(side=tk.LEFT)
