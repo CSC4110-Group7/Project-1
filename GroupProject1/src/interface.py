@@ -25,8 +25,13 @@ class MainInterface:
     def mainloop(self):
         self.root.mainloop()
 
-interface = MainInterface()
-interface.addTab(InfoFrame(interface.root).root, "info")
-interface.addTab(ManageFrame(interface.root).root, "manage")
-interface.addTab(getQueryFrame(interface.root), "query")
-interface.mainloop()
+def main():
+    interface = MainInterface()
+    interface.addTab(InfoFrame(interface.root).root, "info")
+    interface.addTab(ManageFrame(interface.root).root, "manage")
+    interface.addTab(getQueryFrame(interface.root), "query")
+    interface.mainloop()
+
+
+if __name__ == "__main__":
+    main()
