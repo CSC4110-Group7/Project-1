@@ -6,17 +6,17 @@ from csvReaderWriter import readCsv, deleteData, validateData
 from csvReaderWriter import saveCsv
 from csvReaderWriter import columnNames, data
 
-from queryFrame import setViewOutput
 
 class ManageFrame:
-    def __init__(self, parent):
+    def __init__(self, parent, opFrame):
         self.root = ttk.Frame(parent, padding=10)
+        self.opFrame = opFrame
 
         self.title = ttk.Label(self.root, text="Database Management Menu").pack()
 
         self.save_load_frame = ttk.Frame(self.root, padding=20)
         ttk.Label(self.save_load_frame, text="File Operation", padding=10).pack()
-        self.load_button = ttk.Button(self.save_load_frame, text='Load Data', command=openFileButton, padding=10).pack(side=tk.LEFT)
+        self.load_button = ttk.Button(self.save_load_frame, text='Load Data', command=self.openFileButton, padding=10).pack(side=tk.LEFT)
         self.save_button = ttk.Button(self.save_load_frame, text='Save Data', command=saveFileButton, padding=10).pack(side=tk.RIGHT)
         self.save_load_frame.pack()
 
@@ -31,14 +31,14 @@ class ManageFrame:
 
     def pack(self, **kwargs):
         self.root.pack(kwargs)
+        
+    def openFileButton(self):
+        file = filedialog.askopenfile()
+        if file:
+            readCsv(file)
+        self.opFrame.setViewOutput(colNames=columnNames, rows=data)
 
 
-
-def openFileButton():
-    file = filedialog.askopenfile()
-    if file:
-        readCsv(file)
-    setViewOutput(colNames=columnNames, rows=data)
 
 def saveFileButton():
     file = filedialog.asksaveasfile()
