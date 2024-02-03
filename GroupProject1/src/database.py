@@ -1,4 +1,4 @@
-from validation import validateRow, asType
+from validation import validateRow, validate, asType
 
 
 
@@ -62,6 +62,8 @@ class AssignOption:
         type = types[key_index]
         value_in_table = row[key_index]
         result = self.operation(asType(value_in_table, type), asType(self.value, type))
+        if(not validate(result, type)):
+            return
         row[key_index] = result
         return row
 
