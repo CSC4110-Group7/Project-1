@@ -4,7 +4,7 @@ import tkinter as tk
 
 from csvReaderWriter import table, validate
 from scrollTextDisplay import ScrollListDisplay, ScrollTextDisplay
-from database import parseSelectQuery
+from database import parseSelectQuery, parseAssignQuery
 
 
 class OperationFrame:
@@ -72,6 +72,7 @@ class OperationFrame:
         print(f'Executing operation {operation}')
         
         selection_options = parseSelectQuery(self.selection.read())
+        assignment_options = parseAssignQuery(self.modification.read())
         
         if(operation == 'query'):
             rows = table.select(selection_options)
@@ -79,6 +80,10 @@ class OperationFrame:
         elif(operation == 'delete'):
             table.delete(selection_options)
             self.setViewOutput(table.colnames, table.rows)
+        elif(operation == 'update'):
+            table.update(selection_options, assignment_options)
+            self.setViewOutput(table.colnames, table.rows)
+        
     # def executeOperation(self):
     #     operation = self.operation_var.get()
     #     print(f'Executing operation {operation}')
