@@ -1,14 +1,7 @@
+from validation import validateRow, asType
 
-def asType(value, type):
-    match type:
-        case 'email','ssn','phone','alpha','alphanum','string':
-            return str(value)
-        case 'int':
-            return int(value)
-        case 'float', 'number':
-            return float(value)
-        case _:
-            return str(value)
+
+
 
 
 selection_operators = {
@@ -92,8 +85,11 @@ def parseAssignQuery(raw):
 
     return assignments
 
-    
-    
+
+def parseInsertion(raw):
+    options = [option for option in raw.replace(' ', '').split('\n') if (len(option) > 0)]
+    return options
+
 
 class Table:
     def __init__(self, colnames, types):
@@ -106,23 +102,22 @@ class Table:
         
     def select(self, options):
         results = []
-        
         for row in self.rows:
             criteria_met = True
             for option in options:
                 if(not option.check(self.colnames, self.types, row)):
                     criteria_met = False
                     break
-                
             if(criteria_met):
                 results.append(row)
-        
+
         return results
     
     def delete(self, options):
         results = self.select(options)
         for result in results:
             self.rows.remove(result)
+
         return results
 
     def update(self, selection, assignments):
@@ -130,8 +125,13 @@ class Table:
         for row in selected:
             for assignment in assignments:
                 assignment.apply(self.colnames, self.types, row)
+
+        return selected
                 
         
     def insert(self, row):
+        print(row)
+        if(not validateRow(self, row)):
+            return []
         self.rows.append(row)
-
+        return row

@@ -2,9 +2,9 @@ from tkinter import ttk
 from tkinter import *
 import tkinter as tk
 
-from csvReaderWriter import table, validate
+from csvReaderWriter import table
 from scrollTextDisplay import ScrollListDisplay, ScrollTextDisplay
-from database import parseSelectQuery, parseAssignQuery
+from database import parseSelectQuery, parseAssignQuery, parseInsertion
 
 
 class OperationFrame:
@@ -81,7 +81,11 @@ class OperationFrame:
             table.delete(selection_options)
             self.setViewOutput(table.colnames, table.rows)
         elif(operation == 'update'):
-            table.update(selection_options, assignment_options)
+            affected = table.update(selection_options, assignment_options)
+            self.setViewOutput(table.colnames, affected)
+        elif(operation == 'insert'):
+            row_to_insert = parseInsertion(self.modification.read())
+            table.insert(row_to_insert)
             self.setViewOutput(table.colnames, table.rows)
         
     # def executeOperation(self):
