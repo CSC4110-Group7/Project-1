@@ -1,10 +1,7 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter import filedialog, messagebox
+from tkinter import ttk, filedialog
 
-from csvReaderWriter import readCsv, deleteData, validateData
-from csvReaderWriter import saveCsv
-from csvReaderWriter import columnNames, data
+from csvReaderWriter import readCsv, saveCsv
 
 
 class ManageFrame:
@@ -20,14 +17,6 @@ class ManageFrame:
         self.save_button = ttk.Button(self.save_load_frame, text='Save Data', command=saveFileButton, padding=10).pack(side=tk.RIGHT)
         self.save_load_frame.pack()
 
-        # Frame for delete functionality
-        # delete_frame = ttk.Frame(self.root, padding=10)
-        # ttk.Label(master=delete_frame, text="Unique ID:").pack(side=tk.LEFT)
-        # unique_id_entry = ttk.Entry(master=delete_frame)
-        # unique_id_entry.pack(side=tk.LEFT)
-        # ttk.Button(master=delete_frame, text="Delete", command=lambda: deleteButton(unique_id_entry.get()), padding=10).pack(side=tk.RIGHT)
-        # delete_frame.pack(side=tk.BOTTOM)
-
 
     def pack(self, **kwargs):
         self.root.pack(kwargs)
@@ -35,8 +24,8 @@ class ManageFrame:
     def openFileButton(self):
         file = filedialog.askopenfile()
         if file:
-            readCsv(file)
-        self.opFrame.setViewOutput(colNames=columnNames, rows=data)
+            table = readCsv(file)
+            self.opFrame.setViewOutput(colNames=table.colnames, rows=table.rows)
 
 
 
@@ -44,7 +33,3 @@ def saveFileButton():
     file = filedialog.asksaveasfile()
     if file:
         saveCsv(file)
-
-def deleteButton(uniqueId):
-    deleteData(uniqueId)
-    messagebox.showinfo("Success", "Record deleted successfully.")

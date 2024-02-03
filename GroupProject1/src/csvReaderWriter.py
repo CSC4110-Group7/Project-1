@@ -1,43 +1,47 @@
 import re
+from database import Table
 
-#Global csv data
-columnNames = []
-types = []
-data = [[]]
+#Global table
+table = Table([""], ["string"])
 
 email_pattern = re.compile(r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', re.IGNORECASE)
 ssn_pattern = re.compile(r'^\d{3}-\d{2}-\d{4}$')
 phone_pattern = re.compile(r'^\+?1?\d{9,15}$')
 
 def readCsv(file):
-    global columnNames, data, types
-
-    columnNames.clear()
-    data.clear()
-    types.clear()
+    global table
+    
+    table.colnames.clear()
+    table.types.clear()
+    table.rows.clear()
 
     names = file.readline()
     for name in names.strip().split(','):
         nsplit = name.split('.')
-        columnNames.append(nsplit[0])
+        table.colnames.append(nsplit[0])
 
         if(len(nsplit) > 1):
-            types.append(nsplit[1])
+            table.types.append(nsplit[1])
         else:
-            types.append('string')
+            table.types.append('string')
 
     for line in file:
-        data.append(line.strip().split(','))
+        row = line.strip().split(',')
+        if(len(row) != len(table.colnames)):
+            continue
+        table.rows.append(row)
 
     file.close()
+    
+    return table
 
 def saveCsv(file):
-    global columnNames, data, types
-
-    namesOut = ",".join([f"{col}.{typ}" for col, typ in zip(columnNames, types)]) + '\n'
+    global table
+    
+    namesOut = ",".join([f"{col}.{typ}" for col, typ in zip(table.colnames, table.types)]) + '\n'
     file.write(namesOut)
 
-    for row in data:
+    for row in table.rows:
         rowOut = ','.join([value for value in row]) + '\n'
         file.write(rowOut)
 
@@ -45,9 +49,9 @@ def saveCsv(file):
 
 def validateData(row):
     for i, value in enumerate(row):
-        if i >= len(types):  # Prevent index out of range if row has more values than expected
+        if i >= len(table.types):  # Prevent index out of range if row has more values than expected
             return False
-        type = types[i]
+        type = table.types[i]
         if type == 'email':
             return email_pattern.match(value)
         elif type == 'ssn':
@@ -88,7 +92,7 @@ def validate(value, type):
     return True
 
 def deleteData(uniqueId):
-    global data
+    global table
     data = [row for row in data if row[0] != uniqueId]
 
 
