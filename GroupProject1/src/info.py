@@ -1,4 +1,4 @@
-Your Database
+info = """Your Database
 The ForestDB application is provided to you as a solution to your database needs
 
 Application Organization
@@ -54,9 +54,9 @@ ex.
 Ryan
 10.0
 als.r@goog.com
-wagie
+worker
 
 ex. This example will fail due to not all the fields being filled out
 Ryan
 also.r@goog.com
-wagie
+worker"""

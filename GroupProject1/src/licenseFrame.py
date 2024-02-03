@@ -1,14 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
 from scrollTextDisplay import ScrollTextDisplay
-from localpather import resource_path
+from license import license
 
 #Read license content from file
 def ReadLicenseFile():
-    filepath = resource_path('license.txt')
-    with open(filepath, 'r') as file:
-        content = ''.join([line.strip() for line in file.readlines()])
-    file.close()
+    # filepath = resource_path('license.txt')
+    # with open(filepath, 'r') as file:
+    #     content = ''.join([line.strip() for line in file.readlines()])
+    # file.close()
+    content = license
     return content
 
 class LicenseConfirmFrame:
