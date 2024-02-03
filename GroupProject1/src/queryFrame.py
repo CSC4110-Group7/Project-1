@@ -49,6 +49,8 @@ class OperationFrame:
         newop = self.operation_var.get()
         
         self.selection.input.textbox.config(width=90)
+        self.selection.root.grid_forget()
+        self.modification.input.textbox.config(width=90)
         self.modification.root.grid_forget()
         
         if(newop == 'query'):
@@ -56,7 +58,7 @@ class OperationFrame:
         elif(newop == 'delete'):
             self.selection.root.grid(column=1)
         elif(newop == 'insert'):
-            self.selection.root.grid(column=1)
+            self.modification.root.grid(column=1)
         elif(newop == 'update'):
             self.selection.root.grid(row=1, column=1)
             self.selection.input.textbox.config(width=45)
@@ -70,9 +72,13 @@ class OperationFrame:
         print(f'Executing operation {operation}')
         
         selection_options = parseSelectQuery(self.selection.read())
-        rows = table.select(selection_options)
-        self.setViewOutput(table.colnames, rows)
         
+        if(operation == 'query'):
+            rows = table.select(selection_options)
+            self.setViewOutput(table.colnames, rows)
+        elif(operation == 'delete'):
+            table.delete(selection_options)
+            self.setViewOutput(table.colnames, table.rows)
     # def executeOperation(self):
     #     operation = self.operation_var.get()
     #     print(f'Executing operation {operation}')

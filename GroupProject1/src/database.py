@@ -81,6 +81,12 @@ class Table:
                 results.append(row)
         
         return results
+    
+    def delete(self, options):
+        results = self.select(options)
+        for result in results:
+            self.rows.remove(result)
+                
         
     def insert(self, row):
         self.rows.append(row)
