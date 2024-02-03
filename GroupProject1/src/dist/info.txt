@@ -1,0 +1,15 @@
+Your Database
+The ForestDB application is provided to you as a solution to your database needs
+
+Application Organization
+The ForestDB application is organized into multiple different tabs.
+Each tab encapsulates a group of similar functionalities provided by the application.
+The main functionality of the application is contained within the query tab.
+
+The Manage Menu
+The manage menu is where you can find operations that affect the entire database, which aren't query-base.
+This is where you will load and save databases from csv files. This can be done using the load/save buttons.
+
+The Query Menu
+The query menu is where you can perform a variety of database operations.
+Here you will be able to insert, update, search, and delete records by any fields and operators you specify.

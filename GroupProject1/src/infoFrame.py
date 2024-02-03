@@ -1,12 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 from scrollTextDisplay import ScrollTextDisplay
-import os
+from localpather import resource_path
 
 #Read license content from file
 def ReadInfoFile():
-    current_dir = os.path.dirname(__file__)
-    filepath = os.path.join(current_dir, 'info.txt')
+    filepath = resource_path('info.txt')
     with open(filepath, 'r') as file:
         content = '\n'.join([line.strip() for line in file.readlines()])
     file.close()
