@@ -1,7 +1,8 @@
 import re
 
 
-email_pattern = re.compile(r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', re.IGNORECASE)
+# email_pattern = re.compile(r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', re.IGNORECASE)
+email_pattern = re.compile(r'[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}', re.IGNORECASE)
 ssn_pattern = re.compile(r'^\d{3}-\d{2}-\d{4}$')
 phone_pattern = re.compile(r'^\+?1?\d{9,15}$')
 
