@@ -61,6 +61,8 @@ class AssignOption:
         key_index = colnames.index(self.key)
         type = types[key_index]
         value_in_table = row[key_index]
+        if(not validate(self.value, type)):
+            return
         result = self.operation(asType(value_in_table, type), asType(self.value, type))
         if(not validate(result, type)):
             return

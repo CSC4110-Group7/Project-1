@@ -1,4 +1,5 @@
 import re
+import tkinter as tk
 
 
 # email_pattern = re.compile(r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', re.IGNORECASE)
@@ -18,24 +19,37 @@ def validateRow(table, row):
     return True
 
 def validate(value, type):
+    valid = True
+
     if type == 'email':
-        return email_pattern.match(value)
+        valid = email_pattern.match(value)
     elif type == 'ssn':
-        return ssn_pattern.match(value)
+        valid = ssn_pattern.match(value)
     elif type == 'phone':
-        return phone_pattern.match(value)
+        valid = phone_pattern.match(value)
     elif type == 'alpha':
-        return str(value).isalpha()
+        valid = str(value).isalpha()
     elif type == 'alphanum':
-        return str(value).isalnum()
+        valid = str(value).isalnum()
     elif type == 'int':
-        return str(value).isdigit()
+        try:
+            int(value)
+            valid = True
+        except:
+            valid = False
     elif type == 'float':
-        return str(value).isnumeric()
+        try:
+            float(value)
+            valid = True
+        except:
+            valid = False
     elif type == 'string':
-        return len(value) > 0
+        valid = len(value) > 0
     # Add more validations as needed
-    return True
+        
+    if(not valid):
+        tk.messagebox.showerror(title="Invalid Entry", message=f'Expected value of {type} but received: {value}')
+    return valid
 
 
 
