@@ -54,6 +54,9 @@ def validate(value, type):
 
 
 def asType(value, type):
+    if type == 'float':
+        return float(value)
+
     match type:
         case 'email','ssn','phone','alpha','alphanum','string':
             return str(value)

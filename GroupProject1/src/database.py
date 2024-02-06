@@ -66,6 +66,10 @@ class AssignOption:
         result = self.operation(asType(value_in_table, type), asType(self.value, type))
         if(not validate(result, type)):
             return
+        if(type == 'float'):
+            result *= 100
+            result = int(result)
+            result /= 100
         row[key_index] = result
         return row
 
