@@ -5,6 +5,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../styles/index.css" />
+    <style>
+      .download,
+      .download:visited {
+        background-color: rgb(220, 220, 220);
+        color: black;
+        padding: 8px;
+        border-radius: 10px;
+        transition: color 0.25s;
+      }
+
+      .download:hover,
+      .download:visited:hover {
+        background-color: rgb(255, 255, 255);
+        color: black;
+        transition: background-color 0.25s;
+      }
+    </style>
   </head>
   <body>
     <nav>
@@ -16,7 +33,6 @@
       <a href="../">Project 4</a>
     </nav>
     <main>
-      Main content for project 1
       <div>
         <h1>Project 1</h1>
         <p>
@@ -31,6 +47,7 @@
         <h2>Download Project 1 Today!</h2>
         <p>
           <a
+            class="download"
             href="https://drive.google.com/file/d/1s-6MRC050dw8eabMuuZG2xWGGznIhYMz/view?usp=sharing"
             >Download</a
           >
