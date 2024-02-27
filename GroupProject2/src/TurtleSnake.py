@@ -10,7 +10,9 @@ high_score = 0
 
 #Bullets list (to be rendeturtleturtle
 #SnakeHeadInternals
+bullets = []
 
+MOVESPEED = 20
 
 #=-=-=-=-=-=-=-SPEED AND SCOREBOARD=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-
 # Set up the screen
