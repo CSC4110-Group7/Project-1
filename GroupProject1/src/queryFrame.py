@@ -2,9 +2,9 @@ from tkinter import ttk
 from tkinter import *
 import tkinter as tk
 
-from csvReaderWriter import table, validate
+from csvReaderWriter import table
 from scrollTextDisplay import ScrollListDisplay, ScrollTextDisplay
-from database import parseSelectQuery
+from database import parseSelectQuery, parseAssignQuery, parseInsertion
 
 
 class OperationFrame:
@@ -72,6 +72,7 @@ class OperationFrame:
         print(f'Executing operation {operation}')
         
         selection_options = parseSelectQuery(self.selection.read())
+        assignment_options = parseAssignQuery(self.modification.read())
         
         if(operation == 'query'):
             rows = table.select(selection_options)
@@ -79,74 +80,13 @@ class OperationFrame:
         elif(operation == 'delete'):
             table.delete(selection_options)
             self.setViewOutput(table.colnames, table.rows)
-    # def executeOperation(self):
-    #     operation = self.operation_var.get()
-    #     print(f'Executing operation {operation}')
-        
-    #     #Parse query
-    #     query_fields = []
-    #     query_values = []
-    #     for t in self.selection.read().split(','):
-    #         if(len(t.split(':')) != 2):
-    #             continue
-    #         query_fields.append(t.split(':')[0])
-    #         query_values.append(t.split(':')[1])
-
-    #     #Parse update
-    #     modify_fields = []
-    #     modify_values = []
-    #     if(len(self.modification.read()) > 0):
-    #         for t in self.modification.read().split(','):
-    #             if(len(t.split(':')) != 2):
-    #                 continue
-    #             modify_fields.append(t.split(':')[0])
-    #             modify_values.append(t.split(':')[1])
-
-    #     #Validate query
-    #     valid = True
-    #     for i, query_field in enumerate(query_fields):
-    #         field_index = columnNames.index(query_field)
-    #         if(field_index < 0):
-    #             valid = False
-    #             break
-    #         if(not validate(query_values[i], types[i])):
-    #             valid = False
-    #             break
-        
-    #     #Validate update
-    #     for i, modify_field in enumerate(modify_fields):
-    #         field_index = columnNames.index(modify_field)
-    #         if(field_index < 0):
-    #             valid = False
-    #             break
-    #         if(not validate(modify_values[i], types[i])):
-    #             valid = False
-    #             break
-        
-    #     #Do nothing if either query or update is invalid
-    #     if(not valid):
-    #         return
-        
-    #     #Select rows that match
-    #     selected = []
-    #     for i, row in enumerate(data):
-    #         select = True
-
-    #         for j, query_field in enumerate(query_fields):
-    #             query_index = columnNames.index(query_field)
-    #             if(row[query_index] != query_values[j]):
-    #                 select=False
-    #                 continue
-
-    #         if(select):
-    #             selected.append(i)
-
-    #     action = self.operation_var.get()
-    #     if(action == 'query'):
-    #         view = []
-    #         for i in selected:
-    #             view.append(data[i])
-    #         self.setViewOutput(columnNames, view)
+        elif(operation == 'update'):
+            affected = table.update(selection_options, assignment_options)
+            self.setViewOutput(table.colnames, affected)
+        elif(operation == 'insert'):
+            row_to_insert = parseInsertion(self.modification.read())
+            table.insert(row_to_insert)
+            self.setViewOutput(table.colnames, table.rows)
             
     def setViewOutput(self, colNames, rows):
         self.output.clear()
