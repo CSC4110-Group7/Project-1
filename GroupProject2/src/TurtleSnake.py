@@ -8,11 +8,9 @@ delay = 0.1
 score = 0
 high_score = 0
 
-#Bullets list (to be rendered)
-bullets = []
-
+#Bullets list (to be rendeturtleturtle
 #SnakeHeadInternals
-MOVESPEED = 20
+
 
 #=-=-=-=-=-=-=-SPEED AND SCOREBOARD=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-
 # Set up the screen
@@ -38,6 +36,7 @@ def scoreUpdate(score, high_score):
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #Create turtle objects using constructors of the turtle class.
 # Snake head
+   
 head = turtle.Turtle()
 head.speed(0)
 head.shape("square")
