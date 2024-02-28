@@ -11,14 +11,15 @@ class MainInterface:
 
         self.license = LicenseConfirmFrame(self.root, self.packAfterAgree)
         self.license.pack()
-        # self.tab_control.pack(expand=1, fill="both")
 
         self.game = Game(self.root)
 
     def packAfterAgree(self):
         self.game.canvas.pack(expand=1, fill="both")
+        self.game.unpause()
 
     def mainloop(self):
+        self.game.update()
         self.root.mainloop()
 
 def main():
