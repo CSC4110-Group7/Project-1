@@ -7,7 +7,7 @@ class MainInterface:
     def __init__(self):
         self.root = Tk()
         self.root.title("ForestSnake")
-        self.root.geometry("800x500")
+        # self.root.geometry("800x500")
         self.root.protocol("WM_DELETE_WINDOW", self.onWindowClose)
 
         self.license = LicenseConfirmFrame(self.root, self.packAfterAgree)

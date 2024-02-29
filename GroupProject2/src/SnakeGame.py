@@ -2,12 +2,14 @@ import turtle
 import tkinter as tk
 import time
 
-def drawRect(turtle, x, y, w, h, color, fill_color):
+
+def fillRect(turtle, x, y, w, h, color, fill_color, side_width=1):
     turtle.up()
     turtle.goto(x, y)
     turtle.setheading(0) #Make the turtle face +x (right)
     turtle.fillcolor(fill_color)
-    turtle.color(color)
+    turtle.pencolor(color)
+    turtle.width(side_width)
     turtle.begin_fill()
     turtle.down()
     turtle.speed(0)
@@ -19,12 +21,36 @@ def drawRect(turtle, x, y, w, h, color, fill_color):
         turtle.right(90)
 
     turtle.end_fill()
+    
 
-TILE_WIDTH = 10
+# The width (in pixels) of each tile
+TILE_WIDTH = 15
+
+# The size of the play field in tile units
+GRID_WIDTH = 40
+GRID_HEIGHT = 30
+
+# How much space should be around the play field (for text rendering or other)
+SCREEN_PADDING = 20
+SCREEN_PADDING_TOP = 100
+
+# Actual screen size
+SCREEN_WIDTH = TILE_WIDTH * GRID_WIDTH + (SCREEN_PADDING * 2)
+SCREEN_HEIGHT = TILE_WIDTH * GRID_HEIGHT + (SCREEN_PADDING + SCREEN_PADDING_TOP)
+
+# XY Coordinates of the beginning and end of the play field
+GRID_BEGIN_X = SCREEN_PADDING - (SCREEN_WIDTH / 2)
+GRID_BEGIN_Y = (SCREEN_HEIGHT / 2) - SCREEN_PADDING_TOP
+GRID_END_X = SCREEN_PADDING + SCREEN_WIDTH
+GRID_END_Y = SCREEN_PADDING + SCREEN_HEIGHT
+
+# Time between updates
 UPDATE_TIME = 0.05
 
+
+
 class GameObject:
-    def __init__(self, x=0, y=0, vx=0, vy=0, w=10, h=10):
+    def __init__(self, x=0, y=0, vx=0, vy=0, w=TILE_WIDTH, h=TILE_WIDTH):
         self.x = x
         self.y = y
         self.vx = vx
@@ -39,11 +65,16 @@ class GameObject:
         self.y += self.vy
 
     def render(self, turtle):
-        drawRect(turtle, self.x, self.y, self.w, self.h, self.color, self.color)
+        fillRect(turtle, self.x, self.y, self.w, self.h, self.color, self.color)
         
 class Snake(GameObject):
-    def __init__(self, color, x, y):
-        super().__init__(x, y, 1 * TILE_WIDTH, 0, TILE_WIDTH, TILE_WIDTH)
+    def __init__(self, color, tile_x, tile_y):
+        super().__init__(
+            tile_x * TILE_WIDTH + GRID_BEGIN_X, 
+            tile_y * TILE_WIDTH + GRID_BEGIN_Y, 
+            1 * TILE_WIDTH, 0
+            )
+        
         self.color = color
         self.length = 3
         
@@ -62,27 +93,30 @@ class Snake(GameObject):
             segment.render(turtle)
         
 class SnakeSegment(GameObject):
-    def __init__(self, x, y, color):
-        super().__init__(x, y, 0, 0, TILE_WIDTH, TILE_WIDTH)
+    def __init__(self, tile_x, tile_y, color):
+        super().__init__(tile_x, tile_y, 0, 0)
         self.color = color
 
 class Game:
     def __init__(self, root):
-        self.update_time = 500
+        self.root = root
         self.paused = True
         self.running = True
-        self.width = 500
-        self.height = 500
+        self.width = SCREEN_WIDTH
+        self.height = SCREEN_HEIGHT
 
         self.root = root
         self.canvas = tk.Canvas(self.root, width=self.width, height=self.height)
         self.turtle = turtle.RawTurtle(self.canvas)
         self.turtle.hideturtle()
         self.turtle.speed(0)
+        
+        # Disable window updates since we'll be taking it from here
         self.turtle.getscreen().tracer(0)
 
+        # Create a list of game objects in play
         self.objects = []
-        self.objects.append(Snake("red", 40, 40))
+        self.objects.append(Snake("red", 0, 0))
         
     def start(self):
         while self.running:
@@ -101,6 +135,10 @@ class Game:
 
     def render(self):
         self.turtle.clear()
+        
+        # Draw a perimeter around the play area
+        fillRect(self.turtle, 0, 0, TILE_WIDTH, TILE_WIDTH, "red", "white")
+        fillRect(self.turtle, GRID_BEGIN_X, GRID_BEGIN_Y, GRID_WIDTH * TILE_WIDTH, GRID_HEIGHT * TILE_WIDTH, "black", "gray", 2)
         
         for object in self.objects:
             object.render(self.turtle)
