@@ -8,6 +8,7 @@ class MainInterface:
         self.root = Tk()
         self.root.title("ForestSnake")
         self.root.geometry("800x500")
+        self.root.protocol("WM_DELETE_WINDOW", self.onWindowClose)
 
         self.license = LicenseConfirmFrame(self.root, self.packAfterAgree)
         self.license.pack()
@@ -19,8 +20,12 @@ class MainInterface:
         self.game.unpause()
 
     def mainloop(self):
-        self.game.update()
+        self.game.start()
         self.root.mainloop()
+        
+    def onWindowClose(self):
+        self.game.running = False
+        self.root.destroy()
 
 def main():
     interface = MainInterface()
