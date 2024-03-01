@@ -2,19 +2,8 @@ from tkinter import *
 from tkinter import ttk
 from licenseFrame import LicenseConfirmFrame
 from launchFrame import LaunchFrame
-from SnakeGame import Game
-import importlib
+from TurtleSnake import game
 
-def execute_python_file(file_path):
-   try:
-      module_name = file_path.replace('.py', '')  # Remove the '.py' extension
-      module = importlib.import_module(module_name)
-   except FileNotFoundError:
-      print(f"Error: The file '{file_path}' does not exist.")
-   except ModuleNotFoundError:
-      print(f"Error: The module '{module_name}' could not be found.")
-   except ImportError as e:
-      print(f"Error: Unable to import '{module_name}': {e}")
 
 class MainInterface:
     def __init__(self):
@@ -40,7 +29,7 @@ class MainInterface:
         
     def launchGame(self):
         self.root.destroy()
-        execute_python_file("TurtleSnake.py")
+        game()
 
     def mainloop(self):
         # self.game.start()
