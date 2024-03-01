@@ -76,26 +76,45 @@ class Snake(GameObject):
             )
         
         self.color = color
-        self.length = 3
+        self.length = 5
         
         self.segments = []
         
     def update(self):
+        super().update()
         self.segments.append(SnakeSegment(self.x, self.y, self.color))
         
         if(len(self.segments) > self.length):
             self.segments.pop(0)
             
-        super().update()
         
     def render(self, turtle):
-        for segment in self.segments:
-            segment.render(turtle)
+        for i, segment in enumerate(self.segments):
+            if i == len(self.segments)-1:
+                segment.render(turtle, None)
+            else:
+                segment.render(turtle, self.segments[i-1])
+                
         
+SEGMENT_GAP = 2
 class SnakeSegment(GameObject):
-    def __init__(self, tile_x, tile_y, color):
-        super().__init__(tile_x, tile_y, 0, 0)
+    def __init__(self, x, y, color):
+        super().__init__(x, y, 0, 0)
         self.color = color
+        
+    def render(self, turtle, prev_segment):
+        if(prev_segment == None):
+            fillRect(turtle, self.x + SEGMENT_GAP, self.y + SEGMENT_GAP, self.w - (SEGMENT_GAP*2), self.h - (SEGMENT_GAP*2), self.color, self.color)
+            return
+    
+        if(prev_segment.x < self.x):
+            fillRect(turtle, self.x, self.y + SEGMENT_GAP, self.w - SEGMENT_GAP, self.h - (SEGMENT_GAP * 2), self.color, self.color)
+        elif(prev_segment.x > self.x):
+            fillRect(turtle, self.x + SEGMENT_GAP, self.y + SEGMENT_GAP, self.w - SEGMENT_GAP, self.h - (SEGMENT_GAP * 2), self.color, self.color)
+        elif(prev_segment.y < self.y):
+            fillRect(turtle, self.x + SEGMENT_GAP, self.y, self.w - (SEGMENT_GAP * 2), self.h - SEGMENT_GAP, self.color, self.color)
+        else:
+            fillRect(turtle, self.x + SEGMENT_GAP, self.y + SEGMENT_GAP, self.w - (SEGMENT_GAP * 2), self.h - SEGMENT_GAP, self.color, self.color)
 
 class Game:
     def __init__(self, root):
@@ -116,7 +135,15 @@ class Game:
 
         # Create a list of game objects in play
         self.objects = []
-        self.objects.append(Snake("red", 0, 0))
+        self.players = []
+        
+        # Create player 1
+        player1 = Snake("green", 0, 0)
+        self.players.append(player1)
+        self.objects.append(player1)
+        
+        # Init controls for player1
+        self.turtle.getscreen().onkeypress()
         
     def start(self):
         while self.running:
